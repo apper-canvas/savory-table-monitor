@@ -1,0 +1,35 @@
+[
+  {
+    "Id": 1,
+    "date": "2024-01-20",
+    "time": "19:00",
+    "partySize": 2,
+    "customerName": "John Smith",
+    "customerEmail": "john@example.com",
+    "customerPhone": "(555) 123-4567",
+    "specialRequests": "Anniversary celebration",
+    "status": "confirmed"
+  },
+  {
+    "Id": 2,
+    "date": "2024-01-20",
+    "time": "19:30",
+    "partySize": 4,
+    "customerName": "Maria Garcia",
+    "customerEmail": "maria@example.com",
+    "customerPhone": "(555) 987-6543",
+    "specialRequests": "",
+    "status": "confirmed"
+  },
+  {
+    "Id": 3,
+    "date": "2024-01-21",
+    "time": "18:00",
+    "partySize": 6,
+    "customerName": "David Lee",
+    "customerEmail": "david@example.com",
+    "customerPhone": "(555) 456-7890",
+    "specialRequests": "Dietary restrictions - gluten free options needed",
+    "status": "confirmed"
+  }
+]
