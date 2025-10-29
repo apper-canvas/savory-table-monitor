@@ -1,12 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { reservationService } from "@/services/api/reservationService";
+import ApperIcon from "@/components/ApperIcon";
+import Select from "@/components/atoms/Select";
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
-import Select from "@/components/atoms/Select";
 import Card from "@/components/atoms/Card";
-import ApperIcon from "@/components/ApperIcon";
 const ReservationForm = () => {
   const [formData, setFormData] = useState({
     date: "",
@@ -91,14 +91,24 @@ try {
       setLoading(true);
       
       // Check final availability
-      const isAvailable = await reservationService.checkAvailability(formData.date, formData.time);
+const isAvailable = await reservationService.checkAvailability(formData.date, formData.time);
+      
       if (!isAvailable) {
         toast.error("This time slot is no longer available. Please select another time.");
-        await checkAvailability(formData.date);
-        setLoading(false);
         return;
       }
-await reservationService.create(formData);
+
+      const reservationPayload = {
+        customer_name_c: formData.customerName,
+        customer_email_c: formData.customerEmail,
+        customer_phone_c: formData.customerPhone,
+        date_c: formData.date,
+        time_c: formData.time,
+        party_size_c: formData.partySize,
+        special_requests_c: formData.specialRequests
+      };
+
+      await reservationService.create(reservationPayload);
       setLoading(false);
       
       // Show success toast after loading is complete

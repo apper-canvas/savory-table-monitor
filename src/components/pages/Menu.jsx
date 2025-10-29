@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { menuService } from "@/services/api/menuService";
+import { toast } from "react-toastify";
 import MenuCard from "@/components/molecules/MenuCard";
 import CategoryFilter from "@/components/molecules/CategoryFilter";
 import SearchBar from "@/components/molecules/SearchBar";
@@ -29,7 +30,7 @@ const Menu = () => {
     applyFilters();
   }, [allItems, activeCategory, searchQuery, selectedDietaryTags]);
 
-  const loadMenuItems = async () => {
+const loadMenuItems = async () => {
     try {
       setLoading(true);
       setError("");
@@ -47,22 +48,24 @@ const Menu = () => {
 
     // Apply category filter
     if (activeCategory !== "all") {
-      filtered = filtered.filter(item => item.category === activeCategory);
+filtered = filtered.filter(item => item.category_c === activeCategory);
     }
 
     // Apply search filter
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(item =>
-        item.name.toLowerCase().includes(query) ||
-        item.description.toLowerCase().includes(query)
+(item.name_c && item.name_c.toLowerCase().includes(query)) ||
+        (item.description_c && item.description_c.toLowerCase().includes(query))
       );
     }
 
-    // Apply dietary tags filter
+    // Filter by dietary tags
     if (selectedDietaryTags.length > 0) {
-      filtered = filtered.filter(item =>
-        selectedDietaryTags.some(tag => item.dietaryTags.includes(tag))
+      filtered = filtered.filter(item => {
+        const itemTags = item.Tags ? item.Tags.split(',').map(t => t.trim()) : [];
+        return selectedDietaryTags.some(tag => itemTags.includes(tag));
+      }
       );
     }
 

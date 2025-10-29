@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { menuService } from "@/services/api/menuService";
+import { toast } from "react-toastify";
 import MenuCard from "@/components/molecules/MenuCard";
 import Button from "@/components/atoms/Button";
 import Loading from "@/components/ui/Loading";

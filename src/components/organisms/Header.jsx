@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/utils/cn";
+import { AnimatePresence, motion } from "framer-motion";
+import LogoutButton from "./LogoutButton";
 import ApperIcon from "@/components/ApperIcon";
+import { cn } from "@/utils/cn";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -58,7 +59,7 @@ const Header = () => {
             </motion.div>
           </Link>
 
-          {/* Desktop Navigation */}
+{/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navigation.map((item) => (
               <Link
@@ -81,67 +82,50 @@ const Header = () => {
                 )}
               </Link>
             ))}
+            
+            {/* Logout Button */}
+            <LogoutButton />
           </nav>
-
-          {/* CTA Button - Desktop */}
-          <Link
-            to="/reservations"
-            className="hidden md:inline-flex btn-primary"
-          >
-            Book a Table
-          </Link>
 
           {/* Mobile Menu Button */}
           <button
+            className="md:hidden p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-gray-700 hover:text-primary transition-colors duration-200"
+            aria-label="Toggle menu"
           >
-            <ApperIcon 
-              name={isMenuOpen ? "X" : "Menu"} 
-              className="w-6 h-6" 
-            />
+            <ApperIcon name={isMenuOpen ? "X" : "Menu"} size={24} />
           </button>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            className="md:hidden bg-white border-t border-gray-200"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="px-4 py-6 space-y-4">
-              {navigation.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={cn(
-                    "block px-4 py-2 font-medium transition-colors duration-200",
-                    isActive(item.path)
-                      ? "text-primary bg-surface"
-                      : "text-gray-700 hover:text-primary hover:bg-gray-50"
-                  )}
-                >
-                  {item.name}
-                </Link>
-              ))}
-              
+    </motion.header>
+{/* Mobile Menu */}
+    <AnimatePresence>
+      {isMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          className="md:hidden bg-white border-b border-gray-200 shadow-lg"
+        >
+          <nav className="container mx-auto px-4 py-4 flex flex-col space-y-4">
+            {navigation.map((item) => (
               <Link
-                to="/reservations"
+                key={item.path}
+                to={item.path}
+                className={cn(
+                  "text-base font-medium transition-colors duration-200",
+                  isActive(item.path) ? "text-primary" : "text-gray-700"
+                )}
                 onClick={() => setIsMenuOpen(false)}
-                className="block btn-primary text-center"
               >
-                Book a Table
+                {item.name}
               </Link>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            ))}
+            <LogoutButton />
+          </nav>
+        </motion.div>
+      )}
+    </AnimatePresence>
     </motion.header>
   );
 };
