@@ -32,7 +32,8 @@ const Header = () => {
     return location.pathname.startsWith(path);
   };
 
-  return (
+return (
+    <>
     <motion.header
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-300",
@@ -99,34 +100,34 @@ const Header = () => {
       </div>
     </motion.header>
 {/* Mobile Menu */}
-    <AnimatePresence>
-      {isMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          className="md:hidden bg-white border-b border-gray-200 shadow-lg"
-        >
-          <nav className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-            {navigation.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={cn(
-                  "text-base font-medium transition-colors duration-200",
-                  isActive(item.path) ? "text-primary" : "text-gray-700"
-                )}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
-            <LogoutButton />
-          </nav>
-        </motion.div>
-      )}
-    </AnimatePresence>
-    </motion.header>
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-white border-b border-gray-200 shadow-lg"
+          >
+            <nav className="container mx-auto px-4 py-4 flex flex-col space-y-4">
+              {navigation.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={cn(
+                    "text-base font-medium transition-colors duration-200",
+                    isActive(item.path) ? "text-primary" : "text-gray-700"
+                  )}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
+              <LogoutButton />
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
