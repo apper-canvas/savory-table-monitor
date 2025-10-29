@@ -20,7 +20,7 @@ const MenuCard = ({ item }) => {
           alt={item.name}
           className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
         />
-        {item.dietaryTags.length > 0 && (
+{item.dietaryTags?.length > 0 && (
           <div className="absolute top-3 right-3 flex gap-1">
             {item.dietaryTags.map((tag) => {
               const dietary = getDietaryIcon(tag);
